@@ -1,0 +1,6 @@
+/.env
+/.docker/
+/migrate/
+**__pycache__/
+.idea
+.venv

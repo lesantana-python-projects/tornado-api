@@ -1,0 +1,18 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+sqlacodegen = "==2.3.0"
+
+[packages]
+tornado = "==6.0.4"
+py-healthcheck = "==1.10.1"
+python-decouple = "==3.3"
+sqlalchemy = "==1.3.20"
+psycopg2 = "==2.8.6"
+pandas = "==1.1.3"
+
+[requires]
+python_version = "3.8"
