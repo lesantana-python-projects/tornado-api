@@ -4,7 +4,7 @@ from tornado.web import RequestHandler
 class ApiJsonHandler(RequestHandler):
     @staticmethod
     def __response_message(status, response='success'):
-        return {'message': response, 'status': status}
+        return {'result': response, 'status': status}
 
     def initialize(self):
         self.set_header("Content-Type", "application/json")

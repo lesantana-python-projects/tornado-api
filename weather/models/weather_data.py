@@ -2,6 +2,8 @@
 
 
 from sqlalchemy import Column, Integer, Numeric, Date, Sequence, ForeignKey
+
+from weather.configs import config
 from weather.models.model_base import ModelBase
 from weather.models.weather import Weather
 
@@ -9,7 +11,7 @@ from weather.models.weather import Weather
 class WeatherData(ModelBase):
     __tablename__ = 'weather_data'
 
-    id = Column(Integer, Sequence('sequence_weather_data'), primary_key=True, autoincrement='ignore_fk')
+    id = Column(Integer, primary_key=True, autoincrement='ignore_fk')
     date = Column(Date)
     hour = Column(Integer)
     precipitation = Column(Numeric)
@@ -26,8 +28,8 @@ class WeatherData(ModelBase):
     cloud_cover = Column(Numeric)
     evaporation = Column(Numeric)
 
-    weather_id = Column(Integer, ForeignKey(Weather.id), primary_key=True)
-    __table_args__ = ({'schema': 'gaivota'})
+    weather_id = Column(Integer, ForeignKey(Weather.id))
+    __table_args__ = ({'schema': config.SQL_SCHEMA})
 
     @property
     def get_table_name(self):

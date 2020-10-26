@@ -4,11 +4,11 @@ import os
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 
-from weather import create_app
+from weather import ApiApplication
 from weather.configs import config
 
 if __name__ == '__main__':
-    app = create_app()
+    app = ApiApplication()
 
     server = HTTPServer(app)
     port = int(os.getenv('PORT', config.APP_PORT))

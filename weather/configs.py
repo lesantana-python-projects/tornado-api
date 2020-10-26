@@ -20,6 +20,11 @@ class Production(object):
     SQL_DB = config('SQL_DB', default=DATA.get('SQL_DB', 'gaivota'), cast=str)
     SQL_PORT = config('SQL_PORT', default=DATA.get('SQL_PORT', 'usr_dev'), cast=str)
     SQL_POOL_SIZE = config('SQL_POOL_SIZE', default=DATA.get('SQL_POOL_SIZE', 10), cast=int)
+    SQL_SCHEMA = config('SQL_SCHEMA', default=DATA.get('SQL_SCHEMA', 10), cast=str)
+    APP_VERSION = config('APP_VERSION', default=DATA.get('APP_VERSION', '1.0.0'), cast=str)
+    APP_TITLE = config('APP_TITLE', default=DATA.get('APP_TITLE', '1.0.0'), cast=str)
+    PAGE_SIZE = config('PAGE_SIZE', default=DATA.get('PAGE_SIZE', 20), cast=int)
+
 
 
 class Developer(Production):

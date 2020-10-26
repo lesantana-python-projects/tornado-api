@@ -1,19 +1,38 @@
 from healthcheck import HealthCheck
+
+from weather.models import DBDriver
 from weather.views import ApiJsonHandler
 
 
 class HealthcheckApi(ApiJsonHandler):
 
-    # @staticmethod
-    # def __check_database():
-    #     db_driver = DBDriver()
-    #     db_driver.db_session.query("1").from_statement("SELECT 1").all()
-    #     return True, "database ok"
+    @staticmethod
+    def __check_database():
+        db_driver = DBDriver()
+        response = [True, "database ok"]
+        try:
+            with db_driver.db_engine.connect() as conn:
+                conn.execute("SELECT * FROM pg_stat_activity")
+        except Exception as err:
+            response = False, str(err)
+        return response
 
     def get(self, *args, **kwargs):
+        """
+        ---
+        tags:
+        - Healthcheck
+        summary: Get Healthcheck
+        description: 'validate api dependencies'
+        produces:
+        - application/json
+        responses:
+            200:
+              description: list of dependencies
+        """
         health = HealthCheck()
 
-        # health.add_check(self.__check_rabbitmq)
+        health.add_check(self.__check_database)
 
         message, status_code, headers = health.run()
         self.set_status(status_code)

@@ -5,5 +5,11 @@ Install libs with pipenv install, follow command below.
 
 ```
 $ pip install pipenv
-$ pipenv sync --dev #for develop environment
+$ pipenv sync
+```
+Steps to prepare database and content data:
+
+```
+$ python manager.py migrate
+$ python manager.py content
 ```
