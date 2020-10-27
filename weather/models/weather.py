@@ -1,5 +1,5 @@
 # coding: utf-8
-from sqlalchemy import Column, Integer, Numeric, String, Sequence
+from sqlalchemy import Column, Integer, Numeric, String
 
 from weather.configs import config
 from weather.models.model_base import ModelBase
@@ -8,6 +8,7 @@ from weather.models.model_base import ModelBase
 class Weather(ModelBase):
     __tablename__ = 'weather'
     __table_args__ = {'schema': config.SQL_SCHEMA}
+
     id = Column(Integer, primary_key=True)
     latitude = Column(Numeric, nullable=False)
     longitude = Column(Numeric, nullable=False)

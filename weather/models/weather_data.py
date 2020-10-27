@@ -1,7 +1,6 @@
 # coding: utf-8
-
-
-from sqlalchemy import Column, Integer, Numeric, Date, Sequence, ForeignKey
+from sqlalchemy import Column, Integer, Numeric, Date, ForeignKey
+from sqlalchemy.orm import relation
 
 from weather.configs import config
 from weather.models.model_base import ModelBase
@@ -29,6 +28,8 @@ class WeatherData(ModelBase):
     evaporation = Column(Numeric)
 
     weather_id = Column(Integer, ForeignKey(Weather.id))
+    weather = relation(Weather)
+
     __table_args__ = ({'schema': config.SQL_SCHEMA})
 
     @property

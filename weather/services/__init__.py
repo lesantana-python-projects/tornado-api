@@ -1,3 +1,6 @@
+from abc import ABCMeta, abstractmethod
+
+
 class Singleton(type):
     _instances = {}
 
@@ -10,3 +13,24 @@ class Singleton(type):
     def drop():
         """Drop the instance (for testing purposes)"""
         Singleton._instances = {}
+
+
+class ServiceBaseDetail(metaclass=ABCMeta):
+    @abstractmethod
+    async def query_mount(self, target, value, page, size):
+        raise NotImplementedError("Implement me")
+
+    @abstractmethod
+    async def result_mount(self, obj):
+        raise NotImplementedError("Implement me")
+
+
+class ServiceBase(metaclass=ABCMeta):
+
+    @abstractmethod
+    async def process(self, params):
+        raise NotImplementedError("Implement me")
+
+    @abstractmethod
+    async def agreement(self, request):
+        raise NotImplementedError("Implement me")

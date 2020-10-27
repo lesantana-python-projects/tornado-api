@@ -1,4 +1,5 @@
 import json
+import logging.config
 import os
 import sys
 
@@ -24,7 +25,33 @@ class Production(object):
     APP_VERSION = config('APP_VERSION', default=DATA.get('APP_VERSION', '1.0.0'), cast=str)
     APP_TITLE = config('APP_TITLE', default=DATA.get('APP_TITLE', '1.0.0'), cast=str)
     PAGE_SIZE = config('PAGE_SIZE', default=DATA.get('PAGE_SIZE', 20), cast=int)
-
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": True,
+        "formatters": {
+            "simple": {
+                'format': '%(asctime)s [%(levelname)s] %(message)s',
+                'datefmt': '%Y-%m-%d %H:%M:%s'
+            }
+        },
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "formatter": "simple",
+                "stream": "ext://sys.stdout"
+            },
+            'dev_null': {
+                'class': 'logging.NullHandler'
+            }
+        },
+        "loggers": {
+            '': {
+                "handlers": ["console"],
+                'propagate': True,
+                'level': 'INFO',
+            }
+        }
+    }
 
 
 class Developer(Production):
@@ -46,3 +73,4 @@ def _load_config():
 
 
 config = _load_config()
+logging.config.dictConfig(config.LOGGING)
