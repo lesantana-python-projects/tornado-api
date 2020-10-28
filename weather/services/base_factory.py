@@ -1,6 +1,5 @@
 import logging
 from http import HTTPStatus
-from tornado.web import HTTPError
 from tornado.httpclient import HTTPError
 
 from weather.integration import MixinDetail

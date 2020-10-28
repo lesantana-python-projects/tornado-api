@@ -5,6 +5,10 @@ verify_ssl = true
 
 [dev-packages]
 sqlacodegen = "==2.3.0"
+flake8 = "==3.8.4"
+mock = "==4.0.2"
+pytest-cov = "==2.10.1"
+pytest = "==6.1.1"
 
 [packages]
 tornado = "==6.0.4"

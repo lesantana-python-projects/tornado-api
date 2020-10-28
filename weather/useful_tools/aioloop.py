@@ -5,7 +5,7 @@ from tornado.ioloop import IOLoop
 import multiprocessing
 
 
-def _execute_ioloop(func, *args):
+def execute_ioloop(func, *args):
     """ Ioloop Convert Function """
     pool = ThreadPoolExecutor(max_workers=multiprocessing.cpu_count())
     old_future = pool.submit(func, *args)

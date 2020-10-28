@@ -17,20 +17,20 @@ class Singleton(type):
 
 class ServiceBaseDetail(metaclass=ABCMeta):
     @abstractmethod
-    async def query_mount(self, target, value, page, size):
+    def query_mount(self, target, value, page, size):
         raise NotImplementedError("Implement me")
 
     @abstractmethod
-    async def result_mount(self, obj):
+    def result_mount(self, obj):
         raise NotImplementedError("Implement me")
 
 
 class ServiceBase(metaclass=ABCMeta):
 
     @abstractmethod
-    async def process(self, params):
+    def process(self, params):
         raise NotImplementedError("Implement me")
 
     @abstractmethod
-    async def agreement(self, request):
+    def agreement(self, request):
         raise NotImplementedError("Implement me")

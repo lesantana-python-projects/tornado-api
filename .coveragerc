@@ -1,0 +1,15 @@
+[run]
+omit =
+    .venv/*
+    manage.py
+    weather/config.py
+    **/tests/**
+    **/migrations/**
+
+[report]
+omit =
+    .venv/*
+    manage.py
+    weather/config.py
+    **/tests/**
+    **/migrations/**

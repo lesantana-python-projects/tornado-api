@@ -7,7 +7,7 @@ from weather.views import ApiJsonHandler
 class HealthcheckApi(ApiJsonHandler):
 
     @staticmethod
-    def __check_database():
+    def check_database():
         db_driver = DBDriver()
         response = [True, "database ok"]
         try:
@@ -32,7 +32,7 @@ class HealthcheckApi(ApiJsonHandler):
         """
         health = HealthCheck()
 
-        health.add_check(self.__check_database)
+        health.add_check(self.check_database)
 
         message, status_code, headers = health.run()
         self.set_status(status_code)

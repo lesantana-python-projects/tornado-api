@@ -15,5 +15,3 @@ if __name__ == '__main__':
     server.bind(port)
     server.start(multiprocessing.cpu_count() if not config.APP_DEBUG else 1)
     IOLoop.instance().start()
-    app.listen(port)
-    IOLoop.current().start()

@@ -1,4 +1,3 @@
-import tornado
 from tornado.web import Application
 from tornado_swagger.setup import setup_swagger
 
@@ -6,7 +5,7 @@ from weather.configs import config
 from weather.urls import routes
 
 
-class ApiApplication(tornado.web.Application):
+class ApiApplication(Application):
 
     def __init__(self):
         settings = {
