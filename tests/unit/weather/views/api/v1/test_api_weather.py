@@ -11,7 +11,7 @@ from tests.unit.weather import BaseAsyncHttpTestCase, MixinTest
 class TestApiWeatherDetail(MixinTest, BaseAsyncHttpTestCase):
     def setUp(self):
         super(TestApiWeatherDetail, self).setUp()
-        self.url = '/api/v1/weather?target=id&value=1&page=1&page_size=1'
+        self.url = '/api/v1/weather/list?target=id&value=1&page=1&page_size=1'
 
     @mock.patch('weather.views.api.v1.api_weather.BaseDefaultFactory')
     def test_method_get_on_success(self, mock_base_default_factory):

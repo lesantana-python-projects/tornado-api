@@ -49,7 +49,13 @@ class ApiWeatherDetail(ApiJsonHandler):
               content:
                 application/json:
                   schema:
-                    $ref: '#/components/schemas/ArrayOfPostModel'
+                    $ref: '#/components/schemas/ArrayOfModel'
+            'errors':
+              description: response errors
+              content:
+               application/json:
+                schema:
+                  $ref: '#/components/schemas/ArrayOfModel'
         """
         try:
             instance = BaseDefaultFactory.get_instance(carrier='weather_detail')
@@ -81,11 +87,17 @@ class ApiWeatherEdit(ApiJsonHandler):
               type: integer
         responses:
             '200':
-              description: specific of weather
+              description: get specific of weather
               content:
                 application/json:
                   schema:
-                    $ref: '#/components/schemas/ArrayOfPostModel'
+                    $ref: '#/components/schemas/ArrayOfModel'
+            'errors':
+              description: response errors
+              content:
+               application/json:
+                schema:
+                  $ref: '#/components/schemas/ArrayOfModel'
         """
         try:
             instance = BaseDefaultFactory.get_instance(carrier='weather')
@@ -123,8 +135,18 @@ class ApiWeatherEdit(ApiJsonHandler):
                 $ref: '#/components/schemas/WeatherModel'
           required: true
         responses:
-          '200':
-            description: Ok
+            '200':
+              description: update specific of weather
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/ArrayOfModel'
+            'errors':
+              description: response errors
+              content:
+               application/json:
+                schema:
+                  $ref: '#/components/schemas/ArrayOfModel'
         """
         try:
             instance = BaseDefaultFactory.get_instance(carrier='weather')
@@ -142,24 +164,34 @@ class ApiWeatherEdit(ApiJsonHandler):
 
     async def delete(self, weather_id):
         """
-       ---
-       tags:
-         - Weather Location Place
-       summary: Delete specific weather location place
-       description: Delete specific weather location place
-       operationId: DeleteWeather
-       parameters:
-         - name: weather_id
-           in: path
-           description: id to delete weather
-           required: true
-           schema:
-             type: integer
-             format: int64
-       responses:
+        ---
+        tags:
+          - Weather Location Place
+        summary: Delete specific weather location place
+        description: Delete specific weather location place
+        operationId: DeleteWeather
+        parameters:
+          - name: weather_id
+            in: path
+            description: id to delete weather
+            required: true
+            schema:
+              type: integer
+              format: int64
+        responses:
          '200':
-           description: Ok
-       """
+           description: delete specific of weather
+           content:
+             application/json:
+               schema:
+                 $ref: '#/components/schemas/ArrayOfModel'
+         'errors':
+           description: response errors
+           content:
+            application/json:
+             schema:
+               $ref: '#/components/schemas/ArrayOfModel'
+        """
         try:
             instance = BaseDefaultFactory.get_instance(carrier='weather')
             params = await instance.agreement(request=self.request)
@@ -193,8 +225,18 @@ class ApiWeatherAdd(ApiJsonHandler):
                 $ref: '#/components/schemas/WeatherModel'
           required: true
         responses:
-          '200':
-            description: Ok
+          '201':
+            description: create specific of weather
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ArrayOfModel'
+          'errors':
+            description: response errors
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ArrayOfModel'
         """
         try:
             instance = BaseDefaultFactory.get_instance(carrier='weather')
@@ -202,7 +244,7 @@ class ApiWeatherAdd(ApiJsonHandler):
                 request=self.request, name_station=True, latitude=True, longitude=True, location='json')
 
             response = await instance.process(params=params, method=self.request.method)
-            self.success(code=HTTPStatus.OK.value, message=response)
+            self.success(code=HTTPStatus.CREATED.value, message=response)
         except HTTPError as error:
             self.error(code=error.code, message=error.message)
         except KNOWN_ERRORS as error:

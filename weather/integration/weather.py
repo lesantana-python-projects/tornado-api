@@ -4,12 +4,11 @@ from marshmallow import validate
 from webargs import fields
 from webargs.tornadoparser import parser
 
-from weather.exceptions import CustomDatabaseError
 from weather.integration import MixinBase
 from weather.models.weather import Weather
 from weather.services import ServiceBase
 
-from weather.useful_tools.response_mount import weather_response
+from weather.useful_tools.controller_util import weather_response, default_exception_error
 
 logger = logging.getLogger(__name__)
 
@@ -32,11 +31,6 @@ class WeatherController(MixinBase, ServiceBase):
     def __get_object_weather(self, **kwargs):
         return self.model.orm.db_session.query(Weather).filter_by(id=int(kwargs.get('id')))
 
-    def __default_exception_error(self, error):
-        logger.error(str(error))
-        self.model.orm.remove_session()
-        raise CustomDatabaseError(message=self.model.KNOWN_ERROR_SQLALCHEMY.get('friendly_message'))
-
     async def method_get(self, **kwargs):
         query = self.__get_object_weather(**kwargs)
 
@@ -54,7 +48,7 @@ class WeatherController(MixinBase, ServiceBase):
         try:
             weather.update(kwargs)
         except self.model.KNOWN_ERROR_SQLALCHEMY.get('known_errors') as error:
-            self.__default_exception_error(error=error)
+            default_exception_error(model=self.model, error=error)
 
         result = weather_response(weather.first())
         self.model.orm.object_commit(weather.first())
@@ -68,7 +62,7 @@ class WeatherController(MixinBase, ServiceBase):
             self.model.orm.delete_object(weather.first())
             self.model.orm.remove_session()
         except self.model.KNOWN_ERROR_SQLALCHEMY.get('known_errors') as error:
-            self.__default_exception_error(error=error)
+            default_exception_error(model=self.model, error=error)
 
         return 'object deleted successfully'
 
@@ -77,7 +71,7 @@ class WeatherController(MixinBase, ServiceBase):
             weather_post = Weather(**kwargs)
             self.model.orm.object_commit(weather_post)
         except self.model.KNOWN_ERROR_SQLALCHEMY.get('known_errors') as error:
-            self.__default_exception_error(error=error)
+            default_exception_error(model=self.model, error=error)
 
         return 'object created successfully'
 

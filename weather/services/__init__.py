@@ -24,6 +24,14 @@ class ServiceHTTPCommon(metaclass=ABCMeta):
     def method_put(self, **kwargs):
         raise NotImplementedError("Implement me")
 
+    @abstractmethod
+    def method_post(self, **kwargs):
+        raise NotImplementedError("Implement me")
+
+    @abstractmethod
+    def method_delete(self, **kwargs):
+        raise NotImplementedError("Implement me")
+
 
 class ServiceBaseDetail(metaclass=ABCMeta):
     @abstractmethod

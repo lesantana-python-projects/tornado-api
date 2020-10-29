@@ -8,7 +8,7 @@ from http import HTTPStatus
 
 from weather.services import ServiceBase
 from weather.services.paginator import paginate
-from weather.useful_tools.response_mount import weather_response
+from weather.useful_tools.controller_util import weather_response
 
 logger = logging.getLogger(__name__)
 
