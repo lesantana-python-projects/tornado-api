@@ -1,4 +1,6 @@
-from weather.services import ServiceBaseDetail
+from http import HTTPStatus
+from tornado.httpclient import HTTPError
+from weather.services import ServiceBaseDetail, ServiceHTTPCommon
 from webargs import fields, validate
 from webargs.tornadoparser import parser
 from weather import config
@@ -31,3 +33,17 @@ class MixinDetail(ServiceBaseDetail):
         }
 
         return data
+
+
+class MixinBase(ServiceHTTPCommon):
+    async def _run_process(self, params, **kwargs):
+        method = kwargs.get('method', '')
+        formatter_method = 'method_{}'.format(method.lower())
+
+        if not hasattr(self, formatter_method):
+            raise HTTPError(
+                code=HTTPStatus.NOT_FOUND.value, message='controller to method {} not found'.format(method))
+
+        found_method = getattr(self, formatter_method)
+
+        return await found_method(**params)

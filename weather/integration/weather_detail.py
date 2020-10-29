@@ -1,13 +1,14 @@
 import logging
 
 from tornado.httpclient import HTTPError
-from http import HTTPStatus
 from weather.integration import MixinDetail
 from weather.models.weather import Weather
 from sqlalchemy import func
+from http import HTTPStatus
 
 from weather.services import ServiceBase
 from weather.services.paginator import paginate
+from weather.useful_tools.response_mount import weather_response
 
 logger = logging.getLogger(__name__)
 
@@ -37,8 +38,7 @@ class WeatherDetail(MixinDetail, ServiceBase):
 
     async def result_mount(self, obj):
         """ result mount """
-        return {'id': obj.id, 'name_station': str(obj.name_station),
-                'latitude': str(obj.latitude), 'longitude': str(obj.longitude)}
+        return weather_response(obj)
 
-    async def process(self, params):
+    async def process(self, params, **kwargs):
         return await self._run_process(params)

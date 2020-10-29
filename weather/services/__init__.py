@@ -15,6 +15,16 @@ class Singleton(type):
         Singleton._instances = {}
 
 
+class ServiceHTTPCommon(metaclass=ABCMeta):
+    @abstractmethod
+    def method_get(self, **kwargs):
+        raise NotImplementedError("Implement me")
+
+    @abstractmethod
+    def method_put(self, **kwargs):
+        raise NotImplementedError("Implement me")
+
+
 class ServiceBaseDetail(metaclass=ABCMeta):
     @abstractmethod
     def query_mount(self, target, value, page, size):
@@ -28,7 +38,7 @@ class ServiceBaseDetail(metaclass=ABCMeta):
 class ServiceBase(metaclass=ABCMeta):
 
     @abstractmethod
-    def process(self, params):
+    def process(self, params, **kwargs):
         raise NotImplementedError("Implement me")
 
     @abstractmethod

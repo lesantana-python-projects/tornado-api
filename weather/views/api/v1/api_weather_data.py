@@ -11,7 +11,7 @@ class ApiWeatherDataDetail(ApiJsonHandler):
         """
         ---
         tags:
-        - Weather Data
+        - Weather Data Detail
         summary: Get weathers
         description: 'Get weathers'
         produces:

@@ -3,11 +3,12 @@ from http import HTTPStatus
 from tornado.httpclient import HTTPError
 
 from weather.integration import MixinDetail
+from weather.integration.weather import WeatherController
 from weather.integration.weather_data_detail import WeatherDataDetail
 from weather.integration.weather_detail import WeatherDetail
 from weather.services import ServiceBase
 
-__all__ = ['BaseDefaultFactory', 'WeatherDetail', 'WeatherDataDetail']
+__all__ = ['BaseDefaultFactory', 'WeatherDetail', 'WeatherDataDetail', 'WeatherController']
 
 LIST_ABSTRACTS = [ServiceBase, MixinDetail]
 logger = logging.getLogger(__name__)

@@ -14,10 +14,8 @@ class ApiApplication(Application):
 
         setup_swagger(routes,
                       swagger_url='/doc',
-                      api_base_url='/',
-                      description='',
+                      description='Api to available knowledge with python and tornado',
                       api_version=config.APP_VERSION,
-                      title=config.APP_TITLE,
-                      schemes=['http']
-                      )
+                      title=config.APP_TITLE)
+
         super(ApiApplication, self).__init__(routes, **settings)

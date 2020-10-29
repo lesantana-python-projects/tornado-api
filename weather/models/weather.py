@@ -12,7 +12,7 @@ class Weather(ModelBase):
     id = Column(Integer, primary_key=True)
     latitude = Column(Numeric, nullable=False)
     longitude = Column(Numeric, nullable=False)
-    name_station = Column(String(255), nullable=False)
+    name_station = Column(String(255), nullable=False, unique=True)
 
     @property
     def get_table_name(self):

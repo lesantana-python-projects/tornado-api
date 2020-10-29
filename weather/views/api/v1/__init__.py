@@ -1,8 +1,8 @@
-from tornado_swagger.model import register_swagger_model
+from tornado_swagger.components import components
 
 
-@register_swagger_model
-class WeatherModelSuccess:
+@components.schemas.register
+class WeatherRequest:
     """
     ---
     type: object
@@ -15,7 +15,21 @@ class WeatherModelSuccess:
     """
 
 
-@register_swagger_model
+@components.schemas.register
+class ArrayOfPostModel:
+    """
+    ---
+    type: object
+    description: Weather model representation
+    properties:
+        message:
+            type: object
+        status:
+            type: string
+    """
+
+
+@components.schemas.register
 class WeatherModelError:
     """
     ---
@@ -27,4 +41,20 @@ class WeatherModelError:
             description: The user ID.
         status:
             type: string
+    """
+
+
+@components.schemas.register
+class WeatherModel(object):
+    """
+    ---
+    type: object
+    description: Weather model representation
+    properties:
+        name_station:
+            type: string
+        latitude:
+            type: number
+        longitude:
+            type: number
     """
