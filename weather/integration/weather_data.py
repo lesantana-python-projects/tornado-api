@@ -50,7 +50,7 @@ class WeatherDataController(MixinBase, ServiceBase):
             WeatherData.id == int(kwargs.get('id')))
 
     async def method_get(self, **kwargs):
-        query = await self.__get_object_weather_data(**kwargs)
+        query = await self.__get_object_weather_data_join(**kwargs)
 
         result = query.first()
         response = {}
