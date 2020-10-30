@@ -15,7 +15,7 @@ if os.path.isfile(file_path_prod):
 class Production(object):
     APP_PORT = config('APP_PORT', default=DATA.get('APP_PORT', 8081), cast=int)
     APP_DEBUG = config('APP_DEBUG', default=DATA.get('APP_DEBUG', False), cast=bool)
-    SQL_USER = config('SQL_USER', default=DATA.get('SQL_USER', 'usr_dev'), cast=str)
+    SQL_USER = config('SQL_USER', default=DATA.get('SQL_USER', 'postgres'), cast=str)
     SQL_PWD = config('SQL_PWD', default=DATA.get('SQL_PWD', '123456'), cast=str)
     SQL_HOST = config('SQL_HOST', default=DATA.get('SQL_HOST', 'localhost'), cast=str)
     SQL_DB = config('SQL_DB', default=DATA.get('SQL_DB', 'gaivota'), cast=str)

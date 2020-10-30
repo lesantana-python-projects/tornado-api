@@ -7,7 +7,8 @@ Install libs with pipenv install, follow command below.
 $ pip install pipenv
 $ pipenv sync
 ```
-Steps to prepare database and content data:
+Steps to prepare database and content data:<br/>
+OBS: execute in your venv ```Python 3.8.5```
 
 ```
 $ python manager.py migrate
@@ -54,4 +55,12 @@ For the simple test without sonar, you can try this.
 ```
 $ make test-coverage
 
+```
+
+For use in docker
+
+```
+docker exec gaivotaApi python manager.py migrate
+docker exec gaivotaApi python manager.py content
+docker exec gaivotaApi make tests
 ```
