@@ -26,8 +26,6 @@ RUN python -m pip install pipenv
 
 RUN python -m pipenv install --dev
 
-RUN python -m pipenv shell source /etc/profile.d/sonar-scanner.sh
-
 EXPOSE 80
 
 ENTRYPOINT ["supervisord", "-c", "/etc/supervisor/conf.d/supervisor.conf"]

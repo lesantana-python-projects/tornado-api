@@ -54,6 +54,17 @@ $ sudo echo export PATH="$PATH:/opt/sonar-scanner/bin" >> /etc/profile.d/sonar-s
 $ source /etc/profile.d/sonar-scanner.sh
 $ sudo rm -rf ./downloads
 
+------------------- prepare developer environment python 3.8.5 ---------------------------------------
+
+$ sudo apt-get update --upgrade
+$ sudo apt-get -y install git vim openssh-client gcc python3-dev \
+    libevent-dev libblas-dev libatlas-base-dev \
+    libsasl2-dev python-dev libldap2-dev libssl-dev python-psycopg2 \
+    libpq-dev python3-psycopg2 supervisor unzip wget nodejs
+
+$ pip install pipenv
+$ pipenv install --dev
+
 $ make test-sonar
 
 ```

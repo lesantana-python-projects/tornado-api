@@ -10,7 +10,6 @@ services:
       - ./tests:/opt/weather/tests
       - ./files:/opt/weather/files
       - ./Makefile:/opt/weather/Makefile
-      - ./sonar-project-docker.properties:/opt/weather/sonar-project-docker.properties
     ports:
       - "8081:8081"
     depends_on: ["db-postgre"]
