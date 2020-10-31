@@ -8,3 +8,5 @@
 coverage.xml
 /.coverage
 /DockerfileOld
+/logs/
+/logs/

@@ -2,6 +2,8 @@ FROM python:3.8.5
 
 WORKDIR /opt/weather
 
+RUN mkdir -p /opt/weather/logs
+
 RUN apt-get update --upgrade
 RUN apt-get -y install git vim openssh-client gcc python3-dev \
     libevent-dev libblas-dev libatlas-base-dev \

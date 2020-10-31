@@ -22,6 +22,14 @@ In this docker-compose configs, we have the technologies bellow
 . SonarQube = http://localhost:9000/
 . Postgres Database = http://localhost:5432
 . Postgres Admin = http://localhost:15432
+
+```
+
+You can see to logs too in command below:
+
+```
+docker exec gaivotaApi tail -f /opt/weather/logs/weather_api.log
+
 ```
 
 To execute unit tests execute the command bellow. <br/>

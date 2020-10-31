@@ -25,9 +25,10 @@ class Production(object):
     APP_VERSION = config('APP_VERSION', default=DATA.get('APP_VERSION', '1.0.0'), cast=str)
     APP_TITLE = config('APP_TITLE', default=DATA.get('APP_TITLE', '1.0.0'), cast=str)
     PAGE_SIZE = config('PAGE_SIZE', default=DATA.get('PAGE_SIZE', 20), cast=int)
+    PATH_LOG = config('PATH_LOG', default=DATA.get('PATH_LOG', '/etc/logs'), cast=str)
     LOGGING = {
         "version": 1,
-        "disable_existing_loggers": True,
+        "disable_existing_loggers": False,
         "formatters": {
             "simple": {
                 'format': '%(asctime)s [%(levelname)s] %(message)s',
@@ -35,6 +36,12 @@ class Production(object):
             }
         },
         "handlers": {
+            "api": {
+                "class": "logging.handlers.TimedRotatingFileHandler",
+                "when": 'midnight',
+                'formatter': 'simple',
+                "filename": "{path}/weather_api.log".format(path=PATH_LOG)
+            },
             "console": {
                 "class": "logging.StreamHandler",
                 "formatter": "simple",
@@ -46,7 +53,7 @@ class Production(object):
         },
         "loggers": {
             '': {
-                "handlers": ["console"],
+                "handlers": ["console", "api"],
                 'propagate': True,
                 'level': 'INFO',
             }
