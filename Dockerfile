@@ -8,13 +8,6 @@ RUN apt-get -y install git vim openssh-client gcc python3-dev \
     libsasl2-dev python-dev libldap2-dev libssl-dev python-psycopg2 \
     libpq-dev python3-psycopg2 supervisor unzip wget nodejs
 
-RUN mkdir /downloads/sonarqube -p && cd /downloads/sonarqube
-RUN wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
-RUN unzip sonar-scanner-cli-4.2.0.1873-linux.zip
-RUN mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
-RUN echo '#/bin/bash' >> /etc/profile.d/sonar-scanner.sh
-RUN echo export PATH="$PATH:/opt/sonar-scanner/bin" >> /etc/profile.d/sonar-scanner.sh
-
 ENV PIPENV_VERBOSITY=-1
 ENV VIRTUAL_ENV "/venv"
 RUN python -m venv $VIRTUAL_ENV
