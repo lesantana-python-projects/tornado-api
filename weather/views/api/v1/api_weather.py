@@ -150,8 +150,7 @@ class ApiWeatherEdit(ApiJsonHandler):
         """
         try:
             instance = BaseDefaultFactory.get_instance(carrier='weather')
-            params = await instance.agreement(
-                request=self.request, name_station=True)
+            params = await instance.agreement(request=self.request, name_station=True)
 
             params.update({'id': weather_id})
             response = await instance.process(params=params, method=self.request.method)

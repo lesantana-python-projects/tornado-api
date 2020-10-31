@@ -9,6 +9,8 @@ services:
       - ./weather:/opt/weather/weather
       - ./tests:/opt/weather/tests
       - ./files:/opt/weather/files
+      - ./Makefile:/opt/weather/Makefile
+      - ./sonar-project-docker.properties:/opt/weather/sonar-project-docker.properties
     ports:
       - "8081:8081"
     depends_on: ["db-postgre"]
@@ -48,6 +50,19 @@ services:
     environment:
       - PGADMIN_DEFAULT_PASSWORD=123456
       - PGADMIN_DEFAULT_EMAIL=leandro@gaivota.ai
+    networks:
+      - gv_networks
+
+  sonarqube:
+    container_name: gaivotaSonar
+    image: sonarqube:7.9.4-community
+    restart: unless-stopped
+    environment:
+      - SONARQUBE_JDBC_USERNAME=sonar
+      - SONARQUBE_JDBC_PASSWORD=v07IGCFCF83Z95NX
+    ports:
+      - "9000:9000"
+      - "9092:9092"
     networks:
       - gv_networks
 

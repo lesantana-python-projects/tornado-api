@@ -28,11 +28,11 @@ class WeatherController(MixinBase, ServiceBase):
         params = parser.parse(agreement, request, location=(kwargs.get('location', 'json')))
         return params
 
-    def __get_object_weather(self, **kwargs):
+    async def _get_object_weather(self, **kwargs):
         return self.model.orm.db_session.query(Weather).filter_by(id=int(kwargs.get('id')))
 
     async def method_get(self, **kwargs):
-        query = self.__get_object_weather(**kwargs)
+        query = await self._get_object_weather(**kwargs)
 
         result = query.first()
         response = {}
@@ -43,7 +43,7 @@ class WeatherController(MixinBase, ServiceBase):
         return response
 
     async def method_put(self, **kwargs):
-        weather = self.__get_object_weather(**kwargs)
+        weather = await self._get_object_weather(**kwargs)
 
         try:
             weather.update(kwargs)
@@ -57,7 +57,7 @@ class WeatherController(MixinBase, ServiceBase):
         return result
 
     async def method_delete(self, **kwargs):
-        weather = self.__get_object_weather(**kwargs)
+        weather = await self._get_object_weather(**kwargs)
         try:
             self.model.orm.delete_object(weather.first())
             self.model.orm.remove_session()

@@ -62,5 +62,6 @@ For use in docker
 ```
 docker exec gaivotaApi python manager.py migrate
 docker exec gaivotaApi python manager.py content
-docker exec gaivotaApi make tests
+docker exec gaivotaApi make test-sonar
+docker exec gaivotaApi python -m pipenv run make tests
 ```

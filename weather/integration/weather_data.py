@@ -42,15 +42,15 @@ class WeatherDataController(MixinBase, ServiceBase):
 
         return params
 
-    async def __get_object_weather_data(self, **kwargs):
+    async def _get_object_weather_data(self, **kwargs):
         return self.model.orm.db_session.query(WeatherData).filter_by(id=int(kwargs.get('id')))
 
-    async def __get_object_weather_data_join(self, **kwargs):
+    async def _get_object_weather_data_join(self, **kwargs):
         return self.model.orm.db_session.query(WeatherData, Weather).join(Weather).filter(
             WeatherData.id == int(kwargs.get('id')))
 
     async def method_get(self, **kwargs):
-        query = await self.__get_object_weather_data_join(**kwargs)
+        query = await self._get_object_weather_data_join(**kwargs)
 
         result = query.first()
         response = {}
@@ -61,14 +61,14 @@ class WeatherDataController(MixinBase, ServiceBase):
         return response
 
     async def method_put(self, **kwargs):
-        weather_data = await self.__get_object_weather_data(**kwargs)
+        weather_data = await self._get_object_weather_data(**kwargs)
 
         try:
             weather_data.update(kwargs)
         except self.model.KNOWN_ERROR_SQLALCHEMY.get('known_errors') as error:
             default_exception_error(model=self.model, error=error)
 
-        data_updated = await self.__get_object_weather_data_join(**kwargs)
+        data_updated = await self._get_object_weather_data_join(**kwargs)
         self.model.orm.object_commit(weather_data.first())
 
         result = weather_data_response(data_updated.first())
@@ -77,7 +77,7 @@ class WeatherDataController(MixinBase, ServiceBase):
         return result
 
     async def method_delete(self, **kwargs):
-        weather_data = await self.__get_object_weather_data(**kwargs)
+        weather_data = await self._get_object_weather_data(**kwargs)
         try:
             self.model.orm.delete_object(weather_data.first())
             self.model.orm.remove_session()
