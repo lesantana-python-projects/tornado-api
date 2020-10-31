@@ -69,3 +69,5 @@ $ make test-sonar
 
 ```
 ![Alt text](https://github.com/lesantana09/tornado-api/blob/master/files/coverage.png?raw=true "Title")
+
+![Alt text](https://github.com/lesantana09/tornado-api/blob/master/files/swagger.png?raw=true "Title")
