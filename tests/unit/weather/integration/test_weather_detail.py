@@ -1,9 +1,11 @@
 import mock
+from sqlalchemy.exc import IntegrityError
 from tornado.concurrent import Future
 from tornado.httpclient import HTTPClientError
 from tornado.testing import gen_test
 from tests.unit.weather import BaseAsyncHttpTestCase
 from weather.integration.weather_detail import WeatherDetail
+from weather.models.model_base import ModelBase
 
 
 @mock.patch('weather.integration.weather_detail.logger', mock.MagicMock())
@@ -51,6 +53,20 @@ class TestWeatherDetail(BaseAsyncHttpTestCase):
         await self.weather_detail.query_mount('name_station', 'a', 0, 1)
         self.assertTrue(mock_paginate.called)
         self.assertTrue(mock_weather.called)
+
+    @mock.patch('weather.integration.weather_detail.Weather')
+    @mock.patch('weather.integration.weather_detail.paginate')
+    @mock.patch('weather.integration.weather_detail.default_exception_error')
+    @gen_test
+    async def test_query_mount_error(self, mock_default_exception_error, mock_paginate, mock_weather):
+        mock_weather().KNOWN_ERROR_SQLALCHEMY = ModelBase().KNOWN_ERROR_SQLALCHEMY
+        mock_paginate.side_effect = IntegrityError('mock', 'mock', 'mock')
+
+        await self.weather_detail.query_mount('name_station', 'a', 0, 1)
+
+        self.assertTrue(mock_paginate.called)
+        self.assertTrue(mock_weather.called)
+        self.assertTrue(mock_default_exception_error.called)
 
     @mock.patch('weather.integration.weather_detail.Weather')
     @gen_test

@@ -8,7 +8,7 @@ from weather.models.weather_data import WeatherData
 from sqlalchemy import func
 from weather.services import ServiceBase
 from weather.services.paginator import paginate
-from weather.useful_tools.controller_util import weather_data_response
+from weather.useful_tools.controller_util import weather_data_response, default_exception_error
 
 logger = logging.getLogger(__name__)
 
@@ -45,7 +45,12 @@ class WeatherDataDetail(MixinDetail, ServiceBase):
             logger.error(message)
             raise HTTPError(code=HTTPStatus.BAD_REQUEST.value, message=message)
 
-        result = paginate(condition[target], page, size)
+        result = {}
+        try:
+            result = paginate(condition[target], page, size)
+        except model.KNOWN_ERROR_SQLALCHEMY.get('known_errors') as error:
+            default_exception_error(model=model, error=error)
+
         model.orm.remove_session()
         return result
 
